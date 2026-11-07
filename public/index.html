@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EkMira · Mira lo que tu flotilla no te está contando</title>
+<meta name="description" content="No-shows sin cobrar, gasolina en kilómetros vacíos, hojas que no cuadran. EkMira lo detecta solo, sin que nadie capture nada. Hecho en Cancún. Únete a la lista de espera.">
+<meta name="theme-color" content="#0B1E3F">
+<meta property="og:title" content="EkMira · Mira lo que tu flotilla no te está contando">
+<meta property="og:description" content="No-shows sin cobrar. Gasolina en kilómetros vacíos. Hojas que no cuadran. EkMira lo detecta solo. Próximamente.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ekmira.com/">
+<link rel="canonical" href="https://ekmira.com/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap">
+<style>
+:root{
+  --navy:#0B1E3F; --navy-2:#14294F; --gold:#F4B942; --teal:#1FB5AC; --teal-ink:#0E7C76;
+  --bone:#F7F5F0; --stone:#5B6170; --ink-2:#4B5160; --line:#E6E2D8; --white:#FFFFFF;
+  --on-navy:#D4DAE6; --on-navy-2:#B9C3D6; --edge:#33456A;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bone);color:var(--navy);font-family:Inter,system-ui,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--teal-ink)}
+h1,h2,h3{font-family:Sora,sans-serif;margin:0;line-height:1.12;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wordmark{font-family:Sora,sans-serif;font-weight:600;white-space:nowrap;letter-spacing:.2px;text-decoration:none}
+.wordmark .apos{width:.28em;height:.28em;vertical-align:.44em;margin:0 .03em}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;font-size:12.5px;font-weight:600;line-height:1.3;white-space:nowrap}
+.pill.today{background:#D7F3F0;color:#0E5E59}
+.pill.soon{background:#FDF0D2;color:#7A5300}
+.pill.dev{background:#ECEDF0;color:#4B5160}
+.pill.dark{background:rgba(244,185,66,.16);color:var(--gold)}
+.pill.solid{background:var(--gold);color:var(--navy)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;border-radius:14px;border:0;font:700 16px Inter,sans-serif;cursor:pointer;text-decoration:none}
+.btn.gold{background:var(--gold);color:var(--navy)}
+.btn.gold:hover{background:#F7C664}
+.btn.gold:disabled{opacity:.7;cursor:wait}
+.btn.ghost{min-height:44px;padding:0 18px;font-weight:600;font-size:15px;background:transparent;color:var(--bone);border:1px solid var(--edge)}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+/* nav */
+.nav{background:var(--navy);color:var(--bone)}
+.nav .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;min-height:76px}
+.nav .wordmark{color:var(--bone);font-size:26px}
+.nav nav{display:flex;align-items:center;gap:22px;font-size:15px}
+.nav nav a.link{color:var(--on-navy);text-decoration:none}
+.nav nav a.link:hover{color:var(--gold)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;background:radial-gradient(1100px 560px at 78% 30%,#16305F 0%,var(--navy) 62%);color:var(--bone);padding:48px 0 72px}
+.stars{position:absolute;inset:0;pointer-events:none}
+.stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#F7F5F0;opacity:.5;animation:tw 4s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.15}50%{opacity:.85}}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:48px;align-items:center}
+.hero-copy{display:flex;flex-direction:column;gap:22px}
+.hero h1{font-size:clamp(40px,5.6vw,64px);font-weight:700;line-height:1.06}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero .lead{font-size:clamp(18px,1.6vw,21px);line-height:1.6;color:var(--on-navy);max-width:620px}
+.quick{display:flex;flex-direction:column;gap:10px;max-width:620px}
+.quick .row{display:flex;flex-wrap:wrap;gap:10px}
+.quick input[type=email]{flex:1 1 260px;min-height:52px;padding:0 16px;border-radius:14px;border:1px solid var(--edge);background:var(--navy-2);color:var(--bone);font:16px Inter,sans-serif}
+.quick input::placeholder{color:#8C96AB}
+.chips{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.chips span{padding:8px 14px;border-radius:12px;background:var(--navy-2);font-size:14px}
+.chips strong{color:var(--teal)}
+.chips a{color:var(--gold);font-weight:600;font-size:14px;padding:8px 4px}
+.hero-art{position:relative;display:flex;justify-content:center;padding:10px 0 100px}
+.receipt{width:min(360px,100%);background:var(--white);color:var(--navy);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.receipt .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.receipt .top b{font-family:Sora,sans-serif;font-size:17px}
+.receipt .tag{white-space:nowrap;padding:4px 10px;border-radius:999px;background:#FDE2DC;color:#9A3412;font-size:12px;font-weight:600}
+.receipt .map{border-radius:14px;overflow:hidden;background:#DCEFEA;height:130px}
+.receipt .facts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.receipt .facts div{background:var(--bone);border-radius:12px;padding:10px 12px}
+.receipt .facts small{display:block;font-size:12px;color:var(--stone)}
+.receipt .facts strong{font-family:Sora,sans-serif;font-size:20px}
+.receipt .meta{font-size:13px;color:var(--stone)}
+.receipt .dl{display:flex;justify-content:center;align-items:center;min-height:44px;border-radius:12px;background:var(--navy);color:var(--bone);font-weight:600;font-size:14px}
+.kmcard{position:absolute;left:0;bottom:4px;width:240px;background:var(--navy-2);border:1px solid var(--edge);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;color:var(--bone)}
+.kmcard small{font-size:12px;color:var(--on-navy-2)}
+.kmbar{display:flex;height:10px;border-radius:5px;overflow:hidden}
+.kmbar .a{flex:104;background:var(--teal)}.kmbar .b{flex:38;background:var(--gold)}
+.kmcard .legend{display:flex;justify-content:space-between;font-size:13px}
+.kmcard .legend b.a{color:var(--teal)}.kmcard .legend b.b{color:var(--gold)}
+.illus{position:relative;margin-top:18px;font-size:12px;color:#8C96AB}
+.route{animation:drive 3s linear infinite}
+@keyframes drive{to{stroke-dashoffset:-48}}
+
+/* consent + messages */
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.45}
+.on-dark .consent{color:var(--on-navy-2)}
+.on-dark .consent a{color:var(--gold)}
+.consent input{width:18px;height:18px;margin-top:2px;accent-color:var(--gold);flex:0 0 auto}
+.msg{font-size:14.5px;font-weight:500;min-height:1.4em}
+.msg.ok{color:var(--teal)}
+.msg.err{color:#F28B82}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+/* pains */
+section.block{padding:88px 0}
+.head{display:flex;flex-direction:column;gap:10px;max-width:760px;margin-bottom:28px}
+.head .pill{align-self:flex-start}
+.head h2{font-size:clamp(30px,4vw,42px)}
+.head p{color:var(--ink-2);font-size:18px}
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+.filters button{min-height:44px;padding:0 18px;border-radius:999px;font:600 15px Inter,sans-serif;cursor:pointer;background:var(--white);color:var(--navy);border:1px solid #CFCABD}
+.filters button[aria-pressed="true"]{background:var(--navy);color:var(--bone);border-color:var(--navy)}
+.pains{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.pain{background:var(--white);border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:12px}
+.pain[hidden]{display:none}
+.pain.later{border-style:dashed;border-color:#CFCABD}
+.pain .who{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:center}
+.pain .who span:first-child{font-size:12.5px;font-weight:600;color:var(--stone)}
+.pain h3{font-size:21px;line-height:1.25}
+.pain p{color:var(--ink-2);font-size:15px}
+.pain .mod{margin-top:auto;font-size:14px;font-weight:600;color:var(--teal-ink)}
+
+/* proof */
+.proof{background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.proof .wrap{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr));gap:32px;padding-top:48px;padding-bottom:48px;align-items:center}
+.proof h2{font-size:26px}
+.proof .sub{color:var(--ink-2);font-size:15px;margin-top:6px}
+.stat strong{display:block;font-family:Sora,sans-serif;font-size:44px;font-weight:700;line-height:1.05;color:var(--teal-ink)}
+.stat span{color:var(--ink-2);font-size:15px}
+
+/* modules */
+.mods{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.mod-card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+.mod-card.hl{border:2px solid var(--teal)}
+.mod-card b{font-family:Sora,sans-serif;font-size:18px}
+.mod-card span.d{font-size:14px;color:var(--ink-2)}
+.mod-card .pill{align-self:flex-start;margin-top:auto}
+.next{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.next strong{font-family:Sora,sans-serif;margin-right:6px}
+.chip{padding:6px 12px;border-radius:999px;background:var(--white);border:1px solid var(--line);font-size:14px}
+
+/* founders */
+.founders{padding:0 0 88px}
+.founders .box{background:var(--navy);color:var(--bone);border-radius:28px;padding:48px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:center}
+.founders h2{font-size:clamp(28px,3.5vw,38px);margin:14px 0}
+.founders p.lead{color:var(--on-navy);font-size:17px}
+.founders ul{margin:18px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.founders li{display:flex;gap:10px;font-size:15.5px}
+.founders li svg{flex:0 0 18px;margin-top:3px}
+.full{display:flex;flex-direction:column;gap:10px}
+.full label.l{font-size:13px;font-weight:600;color:var(--on-navy-2)}
+.full input[type=email],.full input[type=text],.full select{min-height:52px;padding:0 16px;border-radius:14px;border:1px solid var(--edge);background:var(--navy-2);color:var(--bone);font:16px Inter,sans-serif}
+.full input::placeholder{color:#8C96AB}
+.full .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.full .two>div{display:flex;flex-direction:column;gap:6px}
+
+/* footer */
+footer{background:var(--navy);color:var(--on-navy-2);padding:32px 0;font-size:14px;border-top:1px solid #1A2D52}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:space-between}
+footer .wordmark{color:var(--bone);font-size:22px}
+footer a{color:var(--on-navy)}
+footer .note{flex-basis:100%;font-size:13px;color:#8C96AB}
+
+@media (max-width:980px){
+  .hero .wrap,.founders .box{grid-template-columns:1fr}
+  .hero-art{max-width:420px;margin:0 auto;width:100%}
+  .pains{grid-template-columns:1fr 1fr}
+  .proof .wrap{grid-template-columns:1fr 1fr}
+  .proof .intro{grid-column:1/-1}
+  .mods{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .nav nav a.link{display:none}
+  .pains,.mods,.proof .wrap{grid-template-columns:1fr}
+  .full .two{grid-template-columns:1fr}
+  .founders .box{padding:30px 22px}
+  section.block{padding:64px 0}
+  .kmcard{position:relative;width:100%;margin-top:14px}
+  .hero-art{flex-direction:column;padding-bottom:0}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="wordmark" href="/" aria-label="EkMira, inicio">Ek<svg class="apos" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 2 Q56 44 98 50 Q56 56 50 98 Q44 56 2 50 Q44 44 50 2Z" fill="#F4B942"/></svg>Mira</a>
+    <nav aria-label="Principal">
+      <a class="link" href="#resuelve">Qué resuelve</a>
+      <a class="link" href="#modulos">Módulos</a>
+      <a class="btn ghost" href="#fundadores">Unirme a la lista</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="stars" aria-hidden="true">
+    <i style="top:10%;left:5%"></i><i style="top:24%;left:17%;animation-delay:1s"></i><i style="top:70%;left:7%;animation-delay:2s"></i>
+    <i style="top:86%;left:28%;animation-delay:.5s"></i><i style="top:14%;left:44%;animation-delay:1.6s"></i><i style="top:8%;left:70%;animation-delay:2.4s"></i>
+    <i style="top:32%;left:94%;animation-delay:.8s"></i><i style="top:60%;left:97%;animation-delay:3s"></i><i style="top:92%;left:60%;animation-delay:1.2s"></i>
+    <i style="top:46%;left:52%;animation-delay:2.7s"></i><i style="top:78%;left:86%;animation-delay:.3s"></i><i style="top:4%;left:33%;animation-delay:3.4s"></i>
+  </div>
+  <div class="wrap">
+    <div class="hero-copy on-dark">
+      <span class="pill dark" style="align-self:flex-start"><span class="dot"></span>Próximamente · Hecho en Cancún</span>
+      <h1>Mira lo que tu flotilla <em>no te está contando.</em></h1>
+      <p class="lead">No-shows sin cobrar. Gasolina en kilómetros vacíos. Hojas que no cuadran. Camionetas que se mueven de noche. EkMira lo detecta solo, sin que nadie capture nada.</p>
+
+      <form class="quick" data-waitlist data-source="hero" novalidate>
+        <div class="row">
+          <label class="sr-only" for="hero-email">Correo de trabajo</label>
+          <input id="hero-email" name="email" type="email" autocomplete="email" placeholder="tu@empresa.com" required>
+          <button class="btn gold" type="submit">Quiero ser de los primeros</button>
+        </div>
+        <div class="hp" aria-hidden="true"><label for="hero-web">No llenar</label><input id="hero-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <label class="consent"><input type="checkbox" name="consent" required> <span>Acepto que EkMira use mi correo para avisarme del lanzamiento, según su <a href="/privacidad.html">aviso de privacidad</a>.</span></label>
+        <p class="msg" role="status" aria-live="polite"></p>
+      </form>
+
+      <div class="chips">
+        <span><strong>96%</strong> de servicios detectados en piloto real</span>
+        <span><strong>0</strong> capturas manuales</span>
+        <a href="#resuelve">Ver qué más resuelve ↓</a>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <div class="receipt" role="img" aria-label="Ejemplo de constancia de no-show: la unidad llegó a Terminal 3 a las 10:42 y esperó 45 minutos">
+        <div class="top"><b>Constancia de no-show</b><span class="tag">No se presentó</span></div>
+        <div class="map">
+          <svg viewBox="0 0 316 130" width="100%" height="100%" aria-hidden="true">
+            <path d="M0 44 H316 M0 96 H316 M90 0 V130 M220 0 V130" stroke="#FFFFFF" stroke-width="10"/>
+            <rect x="150" y="30" width="60" height="44" rx="6" fill="#C9E4DE"/>
+            <text x="180" y="57" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#0E5E59">Terminal 3</text>
+            <path class="route" d="M20 120 C 70 120, 120 100, 190 90" fill="none" stroke="#0E7C76" stroke-width="3" stroke-dasharray="1 8" stroke-linecap="round"/>
+            <circle cx="200" cy="86" r="10" fill="#F4B942" stroke="#0B1E3F" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="facts">
+          <div><small>Llegó a Terminal 3</small><strong>10:42</strong></div>
+          <div><small>Esperó</small><strong>45 min</strong></div>
+        </div>
+        <div class="meta">Reserva #AB12 · Unidad 07 · Hiace blanca</div>
+        <div class="dl">Descargar PDF para la agencia</div>
+      </div>
+      <div class="kmcard" role="img" aria-label="Ejemplo: hoy la unidad 07 hizo 104 km con pasajeros y 38 km vacíos">
+        <small>Hoy, unidad 07</small>
+        <div class="kmbar"><span class="a"></span><span class="b"></span></div>
+        <div class="legend"><span><b class="a">104 km</b> con pasajeros</span><span><b class="b">38</b> vacíos</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap"><p class="illus">Constancia y kilómetros: ejemplo ilustrativo.</p></div>
+</section>
+
+<section class="block" id="resuelve" aria-labelledby="pains-title">
+  <div class="wrap">
+    <div class="head">
+      <span class="pill soon">¿Te suena?</span>
+      <h2 id="pains-title">Lo que hoy te cuesta dinero y nadie está midiendo</h2>
+      <p>Elige tu tipo de negocio y ve lo que EkMira resuelve para ti.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filtrar por tipo de negocio">
+      <button type="button" data-filter="todos" aria-pressed="true">Todos</button>
+      <button type="button" data-filter="turismo" aria-pressed="false">Transporte turístico</button>
+      <button type="button" data-filter="duenos" aria-pressed="false">Dueños de unidades</button>
+      <button type="button" data-filter="renta" aria-pressed="false">Renta de autos</button>
+      <button type="button" data-filter="logistica" aria-pressed="false">Logística y reparto</button>
+    </div>
+
+    <div class="pains" aria-live="polite">
+      <article class="pain" data-aud="turismo">
+        <div class="who"><span>Transporte turístico</span><span class="pill today">Disponible hoy · piloto</span></div>
+        <h3>El pasajero no llegó y la agencia no te quiere pagar.</h3>
+        <p>EkMira registra a qué hora llegó tu unidad, cuántos minutos esperó y dónde estaba. Te da una constancia con mapa, lista para cobrar el no-show.</p>
+        <span class="mod">EkMira Operación</span>
+      </article>
+      <article class="pain" data-aud="turismo duenos renta logistica">
+        <div class="who"><span>Toda flotilla</span><span class="pill today">Disponible hoy · piloto</span></div>
+        <h3>Pagas gasolina por kilómetros que nadie te paga.</h3>
+        <p>Ve por unidad y por día cuántos km fueron con pasajeros y cuántos vacíos. Ahí está la gasolina que se te escapa.</p>
+        <span class="mod">EkMira Operación</span>
+      </article>
+      <article class="pain" data-aud="turismo logistica">
+        <div class="who"><span>Turismo · Logística</span><span class="pill today">Disponible hoy · piloto</span></div>
+        <h3>La hoja del chofer no cuadra con lo que pasó.</h3>
+        <p>Compara solo lo que reportó el chofer contra lo que hizo la unidad, servicio por servicio, y te avisa dónde no coincide.</p>
+        <span class="mod">EkMira Operación</span>
+      </article>
+      <article class="pain" data-aud="turismo duenos renta logistica">
+        <div class="who"><span>Toda flotilla</span><span class="pill today">Detección disponible hoy</span></div>
+        <h3>Te enteras del exceso de velocidad por la multa.</h3>
+        <p>Detecta exceso de velocidad, paradas largas, unidades sin señal y entradas y salidas de zonas. Avisos por correo a finales de noviembre.</p>
+        <span class="mod">Alerts &amp; Events</span>
+      </article>
+      <article class="pain" data-aud="duenos renta">
+        <div class="who"><span>Dueños de unidades · Renta</span><span class="pill soon">Próximamente</span></div>
+        <h3>Tu camioneta trabaja de noche y tú ni enterado.</h3>
+        <p>Te avisa cuando la unidad se mueve fuera de horario o sin servicios asignados. Ideal si la rentas o se la dejas al chofer.</p>
+        <span class="mod">Alerts &amp; Events · uso fuera de horario</span>
+      </article>
+      <article class="pain" data-aud="turismo">
+        <div class="who"><span>Transporte turístico</span><span class="pill soon">Próximamente</span></div>
+        <h3>"¿Dónde está mi transporte?", veinte veces al día.</h3>
+        <p>Tu pasajero recibe un enlace con tu marca y ve en cuántos minutos llega su unidad y quién es su chofer.</p>
+        <span class="mod">EkMira Connect</span>
+      </article>
+      <article class="pain" data-aud="turismo duenos renta logistica">
+        <div class="who"><span>Toda flotilla</span><span class="pill soon">Próximamente</span></div>
+        <h3>El seguro o la verificación vencieron y nadie se dio cuenta.</h3>
+        <p>Recordatorios antes de que venzan licencias, seguros, tarjeta de circulación y verificación de cada unidad.</p>
+        <span class="mod">Documentos y cumplimiento</span>
+      </article>
+      <article class="pain" data-aud="duenos turismo logistica">
+        <div class="who"><span>Dueños · Turismo · Logística</span><span class="pill soon">Próximamente</span></div>
+        <h3>No sabes quién es tu mejor chofer.</h3>
+        <p>Una calificación de manejo por chofer para premiar a los buenos y capacitar a los demás.</p>
+        <span class="mod">Driver Score</span>
+      </article>
+      <article class="pain later" data-aud="duenos renta logistica">
+        <div class="who"><span>Dueños · Renta · Logística</span><span class="pill dev">Más adelante</span></div>
+        <h3>El tanque baja más de lo que se maneja.</h3>
+        <p>Con un sensor de combustible, EkMira detecta cargas y bajadas de diésel o gasolina que no cuadran con los km recorridos.</p>
+        <span class="mod">Fuel Management</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="proof" aria-labelledby="proof-title">
+  <div class="wrap">
+    <div class="intro">
+      <h2 id="proof-title">No es una promesa: ya funciona</h2>
+      <p class="sub">Piloto en una unidad de transporte turístico en Cancún, del 27 de octubre al 6 de noviembre de 2026.</p>
+    </div>
+    <div class="stat"><strong>96%</strong><span>de los servicios detectados automáticamente</span></div>
+    <div class="stat"><strong>11 días</strong><span>de operación real, llegadas y salidas de aeropuerto</span></div>
+    <div class="stat"><strong>0</strong><span>capturas manuales del chofer o del despacho</span></div>
+  </div>
+</section>
+
+<section class="block" id="modulos" aria-labelledby="mod-title">
+  <div class="wrap">
+    <div class="head">
+      <span class="pill today">Arma tu plan</span>
+      <h2 id="mod-title">Empiezas con el GPS. Sumas solo lo que necesitas.</h2>
+    </div>
+    <div class="mods">
+      <div class="mod-card hl"><b>EkMira Operación</b><span class="d">Servicios detectados, km vacíos, hoja contra GPS, no-shows.</span><span class="pill today">Disponible hoy · piloto</span></div>
+      <div class="mod-card"><b>EkMira Track</b><span class="d">Ubicación en vivo, historial y mapa de la flotilla.</span><span class="pill today">Disponible hoy</span></div>
+      <div class="mod-card"><b>Alerts &amp; Events</b><span class="d">Velocidad, paradas, sin señal, zonas. Uso fuera de horario, próximamente.</span><span class="pill today">Detección hoy</span></div>
+      <div class="mod-card"><b>AI Intelligence</b><span class="d">ETA inteligente y priorización de alertas.</span><span class="pill dev">En desarrollo</span></div>
+    </div>
+    <div class="next">
+      <strong>Y lo que viene:</strong>
+      <span class="chip">Connect</span><span class="chip">Notificaciones WhatsApp</span><span class="chip">Driver App</span><span class="chip">Documentos</span><span class="chip">Driver Score</span><span class="chip">Dispatch</span><span class="chip">Fuel Management</span>
+    </div>
+  </div>
+</section>
+
+<section class="founders" id="fundadores" aria-labelledby="founders-title">
+  <div class="wrap">
+    <div class="box">
+      <div>
+        <span class="pill solid">Programa de Clientes Fundadores</span>
+        <h2 id="founders-title">Lugares limitados para las primeras flotillas</h2>
+        <p class="lead">Precio especial de fundador, instalación acompañada y voz directa en los siguientes módulos.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#1FB5AC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Precio especial de fundador</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#1FB5AC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Instalación y configuración acompañada</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#1FB5AC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Voz directa en los siguientes módulos</li>
+        </ul>
+      </div>
+      <form class="full on-dark" data-waitlist data-source="fundadores" novalidate>
+        <label class="l" for="f-email">Correo de trabajo</label>
+        <input id="f-email" name="email" type="email" autocomplete="email" placeholder="tu@empresa.com" required>
+        <div class="two">
+          <div>
+            <label class="l" for="f-units">¿Cuántas unidades tienes?</label>
+            <select id="f-units" name="units">
+              <option value="">Elige</option>
+              <option>1 a 5</option><option>6 a 20</option><option>21 a 50</option><option>Más de 50</option>
+            </select>
+          </div>
+          <div>
+            <label class="l" for="f-company">Empresa (opcional)</label>
+            <input id="f-company" name="company" type="text" autocomplete="organization" placeholder="Tu operadora">
+          </div>
+        </div>
+        <div class="hp" aria-hidden="true"><label for="f-web">No llenar</label><input id="f-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <label class="consent"><input type="checkbox" name="consent" required> <span>Acepto que EkMira use mi correo para avisarme del lanzamiento, según su <a href="/privacidad.html">aviso de privacidad</a>.</span></label>
+        <button class="btn gold" type="submit">Apartar mi lugar</button>
+        <p class="msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="wordmark">Ek<svg class="apos" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 2 Q56 44 98 50 Q56 56 50 98 Q44 56 2 50 Q44 44 50 2Z" fill="#F4B942"/></svg>Mira</span>
+    <span>Fleet Intelligence · Cancún, México</span>
+    <span><a href="mailto:contacto@ekmira.com">contacto@ekmira.com</a> · <a href="/privacidad.html">Aviso de privacidad</a></span>
+    <span class="note">© 2026 EkMira. Lo que no dice "Disponible hoy" está en desarrollo; las fechas pueden cambiar.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Filtro "¿Te suena?"
+  var buttons = document.querySelectorAll('[data-filter]');
+  var pains = document.querySelectorAll('.pain');
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var f = b.getAttribute('data-filter');
+      buttons.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      pains.forEach(function (p) {
+        var aud = (p.getAttribute('data-aud') || '').split(' ');
+        p.hidden = !(f === 'todos' || aud.indexOf(f) !== -1);
+      });
+    });
+  });
+
+  // Lista de espera
+  document.querySelectorAll('[data-waitlist]').forEach(function (form) {
+    var msg = form.querySelector('.msg');
+    var btn = form.querySelector('button[type="submit"]');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      msg.className = 'msg';
+      var email = form.email.value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+        msg.className = 'msg err'; msg.textContent = 'Revisa tu correo, parece que le falta algo.'; form.email.focus(); return;
+      }
+      if (!form.consent.checked) {
+        msg.className = 'msg err'; msg.textContent = 'Necesitamos tu autorización para escribirte.'; form.consent.focus(); return;
+      }
+      btn.disabled = true; var label = btn.textContent; btn.textContent = 'Enviando…';
+      fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          company: form.company ? form.company.value.trim() : '',
+          units: form.units ? form.units.value : '',
+          website: form.website.value,
+          source: form.getAttribute('data-source') || 'hero'
+        })
+      }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, d: d }; }); })
+        .then(function (res) {
+          if (res.ok) {
+            msg.className = 'msg ok';
+            msg.textContent = res.d.already ? 'Ya estabas en la lista. Te avisamos en cuanto abramos.' : '¡Listo! Estás en la lista. Te escribimos antes que a nadie.';
+            form.reset();
+          } else {
+            msg.className = 'msg err'; msg.textContent = res.d.error || 'No pudimos guardar tu correo. Intenta de nuevo.';
+          }
+        })
+        .catch(function () { msg.className = 'msg err'; msg.textContent = 'Sin conexión. Intenta de nuevo en un momento.'; })
+        .finally(function () { btn.disabled = false; btn.textContent = label; });
+    });
+  });
+})();
+</script>
+</body>
+</html>
