@@ -1,43 +1,31 @@
 # ekmira.com — página "Próximamente"
 
-Sitio estático para Cloudflare Pages, con una lista de espera que guarda los correos en Cloudflare D1.
+Sitio en Cloudflare Workers con archivos estáticos (`public/`) y una lista de espera que guarda los correos en Cloudflare D1.
 
 ```
 ekmira-site/
-├── public/                 # lo que se publica
-│   ├── index.html          # página principal (hero, piloto, módulos, Connect, Fundadores)
-│   ├── privacidad.html     # aviso de privacidad simplificado (llenar los [CORCHETES])
-│   ├── favicon.svg         # estrella de Ek'Mira
-│   └── _headers            # cabeceras de seguridad
-├── functions/api/waitlist.js   # POST /api/waitlist → inserta en D1
+├── public/                 # la página (index.html, privacidad.html, favicon.svg, _headers)
+├── src/worker.js           # atiende /api/waitlist y sirve la página
+├── src/waitlist.js         # validación e inserción en D1
 ├── schema.sql              # tabla waitlist
-└── wrangler.toml           # configuración de Pages + binding D1 "DB"
+└── wrangler.toml           # Worker + assets + binding D1 "DB"
 ```
 
-## Antes de publicar
+## Despliegue
 
-1. En `public/privacidad.html`, reemplaza `[NOMBRE O RAZÓN SOCIAL DEL RESPONSABLE]`, `[DOMICILIO]` y `[FECHA DE PUBLICACIÓN]`. Conviene que lo revise tu abogado.
-2. Crea los correos `contacto@ekmira.com` y `privacidad@ekmira.com`, o cambia esas direcciones en los dos HTML.
+El proyecto `ekmira` en *Workers y Pages* está conectado al repo de GitHub y despliega con `npx wrangler deploy` en cada push a `main`. No hay comando de compilación.
 
-## Publicar (una sola vez)
+En `wrangler.toml`, `database_id` debe ser el ID de la base `ekmira-waitlist` (se obtiene con `npx wrangler d1 list`).
 
-1. **Pasa ekmira.com a Cloudflare.** Cloudflare → *Add a domain* → ekmira.com y, en tu registrador, cambia los nameservers por los que te da Cloudflare.
-2. **Sube la carpeta a un repo de GitHub**, por ejemplo `ekmira-site` (privado está bien).
-3. **Crea la base D1** y copia el `database_id` que imprime en `wrangler.toml`:
-   ```bash
-   npx wrangler login
-   npx wrangler d1 create ekmira-waitlist
-   npx wrangler d1 execute ekmira-waitlist --remote --file=schema.sql
-   ```
-4. **Crea el proyecto en Pages.** Cloudflare → *Workers & Pages* → *Create* → *Pages* → *Connect to Git* → elige el repo.
-   - Framework preset: *None*
-   - Build command: vacío
-   - Build output directory: `public`
+La tabla se crea una sola vez:
 
-   Pages toma el binding `DB` de `wrangler.toml`. Si no aparece, agrégalo en *Settings → Bindings → D1 database*, con nombre `DB` y base `ekmira-waitlist`.
-5. **Dominio.** En el proyecto, *Custom domains* → agrega `ekmira.com` y `www.ekmira.com`.
+```bash
+npx wrangler d1 execute ekmira-waitlist --remote --file=schema.sql
+```
 
-Desde ahí, cada `git push` a `main` publica solo.
+## Dominio
+
+En el proyecto: *Dominios* (o *Configuración → Dominios y rutas*) → *Agregar* → *Dominio personalizado* → `ekmira.com`, y otra vez para `www.ekmira.com`.
 
 ## Ver la lista de espera
 
@@ -46,14 +34,12 @@ npx wrangler d1 execute ekmira-waitlist --remote \
   --command "SELECT email, company, units, source, country, created_at FROM waitlist ORDER BY created_at DESC"
 ```
 
-También puedes verla y exportarla desde el panel: *Storage & Databases → D1 → ekmira-waitlist*.
-
 ## Probar en tu computadora
 
 ```bash
 npx wrangler d1 execute ekmira-waitlist --local --file=schema.sql
-npx wrangler pages dev public
-# abre http://localhost:8788
+npx wrangler dev
+# abre http://localhost:8787
 ```
 
 ## Cómo responde la API
@@ -64,3 +50,4 @@ npx wrangler pages dev public
 | Correo ya registrado (sin importar mayúsculas) | `200 {"ok":true,"already":true}` |
 | Correo inválido | `400 {"error":"..."}` |
 | Bot (llenó el campo oculto `website`) | `200 {"ok":true}` y no se guarda nada |
+| Método distinto de POST | `405` |

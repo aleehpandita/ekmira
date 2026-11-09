@@ -5,15 +5,15 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const UNITS = new Set(['', '1 a 5', '6 a 20', '21 a 50', 'Más de 50']);
 const SOURCES = new Set(['hero', 'fundadores']);
 
-const json = (body, status = 200) =>
+export const json = (body, status = 200, extra = {}) =>
   new Response(JSON.stringify(body), {
     status,
-    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' },
+    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', ...extra },
   });
 
 const clean = (v, max) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 
-export async function onRequestPost({ request, env }) {
+export async function handleWaitlist(request, env) {
   if (!env.DB) return json({ error: 'El servicio no está configurado todavía.' }, 500);
 
   const type = request.headers.get('Content-Type') || '';
@@ -33,8 +33,10 @@ export async function onRequestPost({ request, env }) {
   if (!EMAIL_RE.test(email)) return json({ error: 'Revisa tu correo, parece que le falta algo.' }, 400);
 
   const company = clean(data.company, 120);
-  const units = UNITS.has(clean(data.units, 20)) ? clean(data.units, 20) : '';
-  const source = SOURCES.has(clean(data.source, 20)) ? clean(data.source, 20) : 'hero';
+  const unitsRaw = clean(data.units, 20);
+  const units = UNITS.has(unitsRaw) ? unitsRaw : '';
+  const sourceRaw = clean(data.source, 20);
+  const source = SOURCES.has(sourceRaw) ? sourceRaw : 'hero';
   const country = request.cf?.country || '';
   const userAgent = clean(request.headers.get('User-Agent') || '', 300);
 
